@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  discord-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB : discord
+    volumes:
+      - discord-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - pg
+    #TODO : healthcheck
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+  #TODO: exporter prometheuscommunity/postgres-exporter:v0.10.1
+volumes:
+  discord-data:
+networks:
+  pg:
+    driver: bridge
